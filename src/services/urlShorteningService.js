@@ -5,6 +5,7 @@ class UrlShorteningService {
     constructor() {
         this.model = new ModelOperations();
         this.hashGenerator = new Generator();
+        this.blackList = ['getByHash', 'insertRow', 'getByHash', 'redirect', 'api-docs' ];
     }
 
 
@@ -15,14 +16,17 @@ class UrlShorteningService {
     }
 
     async isUnique(newHash) {
-        const blackList = ['getAll', 'insertRow', 'getByHash', 'redirect' ];
         const reponse = await this.model.findByHash(newHash);
-        return((reponse.length === 0) && !blackList.includes(newHash));
+        return((reponse.length === 0) && !this.blackList.includes(newHash));
     }
 
     async redirectToLongUrl(req, res) {
-        const response = await this.model.getLongUrl(req.params.hash);
-        res.redirect(response.rows[0].original_url);
+        if(!this.blackList.includes(req.params.hash)) {
+            const response = await this.model.getLongUrl(req.params.hash);
+            res.redirect(response.rows[0].original_url);
+        } else {
+            res.send(req);
+        }
     }
 
     async shortenAndSave(req,res) {

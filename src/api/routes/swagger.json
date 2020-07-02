@@ -1,0 +1,59 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "",
+      "description": "",
+      "version": "1.0"
+    },
+    "produces": ["application/json"],
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+      "/shortenURL": {
+        "post": {
+          "x-swagger-router-controller": "UrlShorteningService",
+          "url": "shortenURL",
+          "tags": ["/url shortening"],
+          "description": "Takes a URL as input e.g. http://somewebsite.com , stores the full and shortened URL in the DB, and returns a JSON payload.",
+          "parameters": ["url"],
+          "responses": {
+                "200": { "description" : {
+                    "id": 1234,
+                    "shortened_url" : "http://shorten.io/sY4",
+                    "original_url" : "http://somewebsite.com"}
+                },
+                "400": {"description" : "Bad Request."}
+            }
+        }
+      },
+      "/getByHash": {
+        "get": {
+          "x-swagger-router-controller": "UrlShorteningService",
+          "url": "getByHash",
+          "tags": ["/get short url details"],
+          "description": "Takes a URL hash and get url details.",
+          "parameters": ["hash"],
+          "responses": {
+                "200": { "description" : "Success"},
+                "body": { 
+                    "id": 1234,
+                    "shortened_url" : "http://shorten.io/sY4",
+                    "original_url" : "http://somewebsite.com"
+                }
+            }
+        }
+      },
+      "/:hash": {
+        "get": {
+          "x-swagger-router-controller": "UrlShorteningService",
+          "url": ":hash",
+          "tags": ["/redirect "],
+          "description": "redirect using short url",
+          "parameters": ["hash"],
+          "responses": {
+                "200": { "description" : "Success"}
+            }
+        } 
+    }
+ }
+}

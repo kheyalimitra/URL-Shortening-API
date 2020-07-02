@@ -2,8 +2,33 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
+var swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
-const options = cors.CorsOptions = {
+var swaggerDefinition = {
+    info: {
+      title: 'URL Shortening API',
+      version: '1.0.0',
+      description: 'A simple service to shorten URLs',
+    },
+    host: 'localhost:3000',
+    basePath: '/',
+  };
+  // options for the swagger docs
+const options = {
+    // import swaggerDefinitions
+    swaggerDefinition: swaggerDefinition,
+    // path to the API docs
+    apis: ['./src/api/routes/*.js'],
+  };
+// initialize swagger-jsdoc
+const swaggerSpec = swaggerJSDoc(options);
+app.get('/swagger.json', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
+});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const corsOptions = cors.CorsOptions = {
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
     credentials: true,
     methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
@@ -15,6 +40,6 @@ app.use(cors(options));
 const appRouter = require('./src/api/routes');
 const port = process.env.PORT || 3000;
 const host = '127.0.0.1';
-app.use('/', appRouter);
+app.use('/api', appRouter);
 app.listen(port, host);
 console.log('Node server running on port 3000 ...');
