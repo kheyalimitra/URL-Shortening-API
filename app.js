@@ -12,7 +12,7 @@ const options = cors.CorsOptions = {
 };
 app.use(bodyParser.json());
 app.use(cors(options));
-const appRouter = require('./routes');
+const appRouter = require('./src/api/routes');
 const port = process.env.PORT || 3000;
 const host = '127.0.0.1';
 app.use('/', appRouter);

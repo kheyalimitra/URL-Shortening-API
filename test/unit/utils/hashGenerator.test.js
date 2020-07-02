@@ -1,5 +1,5 @@
 'use strict'
-const generator = require('../utils/hashGenerator');
+const generator = require('../../../src/utils/hashGenerator');
 const expect = require('chai').expect;
 
 describe('Controller module', () => {

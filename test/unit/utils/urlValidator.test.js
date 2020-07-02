@@ -1,5 +1,5 @@
 'use strict'
-const validator = require('../utils/urlValidator');
+const validator = require('../../../src/utils/urlValidator');
 const expect = require('chai').expect;
 
 describe('Controller module', () => {
