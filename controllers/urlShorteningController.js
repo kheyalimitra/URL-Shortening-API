@@ -2,7 +2,9 @@ const model = require('../models/crudOperations');
 const hashGenerator = require('../utils/hashGenerator');
 
 const isUnique = (newHash) => {
-    return(model.isExist(newHash));
+    const blackList = ['getAll', 'insertRow', 'getByHash', 'redirect' ];
+    // return(!model.isExist(newHash) && !blackList.Contains(newHash));
+    return(!blackList.includes(newHash));
 }
 
 module.exports = {
@@ -19,11 +21,9 @@ module.exports = {
        res.send(response);
     },
 
-    InsertRecord: (req,res) => {
-        debugger;
-        console.log(req.body['url']);
-        var hash = hashGenerator.generateHash(req.body['url']);
-        const domain = req.body['domain'] || 'https://url-shorten.io';
+    InsertRecord: async (req,res) => {
+        var hash = hashGenerator.generateHash(req.data.url);
+        const domain = req.data.domain || 'https://url-shorten.io';
         var recurse = 0;
         // try to generate new hash when collision occurs. Breaks after 30 itr
         while (recurse < 30 && !isUnique(hash)) {
@@ -34,11 +34,11 @@ module.exports = {
             throw new Error('DataHandler::InsertRecord : Cannot generate unique hash from given url.');
         } else {
             const payload = {
-                url: url,
+                url: req.data.url,
                 hash: hash,
                 shortUrl: `${domain}/${hash}`
             }
-            const response = model.insertRecord(payload);
+            const response = await model.insertRecord(payload);
             res.send(response);
         }
         

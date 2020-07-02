@@ -33,9 +33,26 @@ module.exports = {
         })
     },
     insertRecord: async (payload) => {
-        const queryString = `INSERT INTO ${config.dev.table_name}(long_url, short_url, hash, created_at) VALUES (${payload.url}, ${payload.short_url}, ${payload.hash}, ${process.hrtime()})`;
-        const result = await pool.query(queryString);
-        return result;   
+        // note: no need for try/catch this because if connecting throws an exception
+        // we don't need to dispose of the client (it will be undefined)
+        const client = await pool.connect();
+        const queryString = `INSERT INTO ${config.dev.table_name} (long_url, short_url, hash) VALUES ($1, $2, $3)RETURNING id;`;
+        try{
+            await client.query('BEGIN');
+            const response = await client.query(queryString, [payload.url, payload.shortUrl, payload.hash]);
+            await client.query('COMMIT');
+            return {
+                id: Number(response.rows[0].id),
+                shortened_url : payload.shortUrl,
+                original_url: payload.url
+            };
+        } catch (e) {
+            await client.query('ROLLBACK');
+            throw e
+        } finally {
+            client.release()
+        }
+           
       },
 
     fetchByHash:function(query){

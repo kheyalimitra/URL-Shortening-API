@@ -21,6 +21,10 @@ describe('Controller module', () => {
         it('validate long url- http', () => {
             expect(validator.validateUrl('http://www.example1.com:777/a/b?c=d&e=f#g')).to.true;
         });
+        it('validate sql injection', () => {
+            expect(validator.validateUrl('http://newspaper.com/items.php?id=2 and 1=2')).to.false;
+        });
+        
     })
 })
 

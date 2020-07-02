@@ -6,7 +6,7 @@ var router = express.Router();
 // router.get('/redirect/:hash', dbHandler.fetchRecord());
 router.get('/getAll', controller.fetchRecords);
 router.post('/insertRow', (req, res) => {
-    controller.InsertRecord;
+    controller.InsertRecord(req.body, res);
 });
 
 module.exports = router;

@@ -18,6 +18,11 @@ describe('Controller module', () => {
             const hash = generator.generateHash('https://www.example.com:777/a/b?c=d&e=f#g');
             expect(hash.length).to.be.equal(3);
         });
+        it('should not generate hash from blacklisted words', () => {
+            const blackList = ['getAll', 'insertRow', 'getByHash', 'redirect' ];
+            const hash = generator.generateHash('https://www.example.com:777/a/b?c=d&e=f#g');
+            expect(blackList.includes(hash)).to.be.false;
+        });
     });
 })
 
