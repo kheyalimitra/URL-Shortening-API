@@ -1,47 +1,44 @@
 const model = require('../models/crudOperations');
 const hashGenerator = require('../utils/hashGenerator');
 
-const isUnique = (newHash) => {
+const isUnique = async (newHash) => {
     const blackList = ['getAll', 'insertRow', 'getByHash', 'redirect' ];
-    // return(!model.isExist(newHash) && !blackList.Contains(newHash));
-    return(!blackList.includes(newHash));
+    const reponse = await model.findByHash(newHash);
+    return((reponse.length === 0) && !blackList.includes(newHash));
 }
 
 module.exports = {
-    createTable: (req,res) => {
-       const response=model.createTable(req);
-       res.send(response);
-    },
-    fetchByHash: (req,res) => {
-        const response=model.fetchByHash(req);
+    fetchByHash: async(req,res) => {
+        const response = await model.findByHash(req.params.hash);
         res.send(response);
     },
-    fetchRecords: (req,res) => {
-       const response = model.fetchrecords();
-       res.send(response);
+
+    // fetchAllRecords: (req,res) => {
+    //    const response = model.fetchrecords();
+    //    res.send(response);
+    // },
+
+    redirectToLongUrl: async (req, res) => {
+        const response = await model.getLongUrl(req.params.hash);
+        res.redirect(response.rows[0].long_url);
     },
 
-    InsertRecord: async (req,res) => {
-        var hash = hashGenerator.generateHash(req.data.url);
-        const domain = req.data.domain || 'https://url-shorten.io';
+    shortenAndSave: async (req,res) => {
+        var hash = hashGenerator.generateHash(req.url);
         var recurse = 0;
         // try to generate new hash when collision occurs. Breaks after 30 itr
         while (recurse < 30 && !isUnique(hash)) {
-            hash = hashGenerator.generateHash(req.body['url']);
+            hash = hashGenerator.generateHash(req.url);
             recurse += 30;
-        }
-        if(recurse > 30 || !isUnique(hash)) {
-            throw new Error('DataHandler::InsertRecord : Cannot generate unique hash from given url.');
-        } else {
-            const payload = {
-                url: req.data.url,
-                hash: hash,
-                shortUrl: `${domain}/${hash}`
+            if (recurse > 30) {
+                throw new Error('DataHandler::InsertRecord : Cannot generate unique hash from given url.');
             }
-            const response = await model.insertRecord(payload);
-            res.send(response);
         }
-        
+        const payload = {
+            url: req.url,
+            hash: hash
+        }
+        const response = await model.insertRecord(payload);
+        res.send(response);
     }
-
    }

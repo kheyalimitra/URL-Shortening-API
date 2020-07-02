@@ -1,10 +1,11 @@
 {
-   "dev": {
+   "db_dev": {
         "user": "i858830",
         "host": "localhost",
         "database": "postgres",
         "password": "pgAdmin",
         "port": "5432",
         "table_name": "url_details"
-   } 
+   } ,
+   "url_domain_dev": "http://localhost:3000"
 }
