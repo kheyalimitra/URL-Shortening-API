@@ -27,7 +27,6 @@ app.get('/swagger.json', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
 });
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const corsOptions = cors.CorsOptions = {
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
     credentials: true,
@@ -35,11 +34,14 @@ const corsOptions = cors.CorsOptions = {
     origin: 'http://localhost:3000',
     preflightContinue: false
 };
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(bodyParser.json());
-app.use(cors(options));
+app.use(cors(corsOptions));
 const appRouter = require('./src/api/routes');
 const port = process.env.PORT || 3000;
 const host = '127.0.0.1';
 app.use('/api', appRouter);
 app.listen(port, host);
-console.log('Node server running on port 3000 ...');
+console.log('Node server running ...');
+
+module.exports = app;

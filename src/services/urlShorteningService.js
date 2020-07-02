@@ -24,8 +24,6 @@ class UrlShorteningService {
         if(!this.blackList.includes(req.params.hash)) {
             const response = await this.model.getLongUrl(req.params.hash);
             res.redirect(response.rows[0].original_url);
-        } else {
-            res.send(req);
         }
     }
 
