@@ -1,0 +1,1 @@
+insert into public.url_details(long_url, short_url, hash, created_at) values('a','b','c',to_timestamp('16-05-2011 15:36:38', 'dd-mm-yyyy hh24:mi:ss'))

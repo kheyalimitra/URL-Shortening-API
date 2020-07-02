@@ -1,9 +1,9 @@
 'use strict'
 
-const Pool = require("pg");
+const pg = require("pg");
 const config = require('../db/dbConfig.json');
 
-const pool = new Pool({
+const pool = new pg.Pool({
     user: config.dev.user,
     host: config.dev.host,
     database: config.dev.database,
@@ -32,10 +32,12 @@ module.exports = {
                 })
         })
     },
-    insertRecord:function(payload){
-        const data="data was fetched";
-        return data;   
+    insertRecord: async (payload) => {
+        const queryString = `INSERT INTO ${config.dev.table_name}(long_url, short_url, hash, created_at) VALUES (${payload.url}, ${payload.short_url}, ${payload.hash}, ${process.hrtime()})`;
+        const result = await pool.query(queryString);
+        return result;   
       },
+
     fetchByHash:function(query){
         const data="data was fetched";
       return data;   

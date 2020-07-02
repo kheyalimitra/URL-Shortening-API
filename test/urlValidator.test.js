@@ -1,5 +1,5 @@
 'use strict'
-const validator = require('../controllers/urlValidator');
+const validator = require('../utils/urlValidator');
 const expect = require('chai').expect;
 
 describe('Controller module', () => {
@@ -15,8 +15,11 @@ describe('Controller module', () => {
             expect(validator.validateUrl("index.php?name=guest<script>alert('attacked')</script>')")).to.false;
         });
         
-        it('validate long url', () => {
+        it('validate long url- https', () => {
             expect(validator.validateUrl('https://www.example.com:777/a/b?c=d&e=f#g')).to.true;
+        });
+        it('validate long url- http', () => {
+            expect(validator.validateUrl('http://www.example1.com:777/a/b?c=d&e=f#g')).to.true;
         });
     })
 })
