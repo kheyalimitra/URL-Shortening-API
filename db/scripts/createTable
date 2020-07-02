@@ -1,0 +1,18 @@
+-- Table: public.url_details
+
+-- DROP TABLE public.url_details;
+insert into public.url_details(id, long_url, short_url, hash, created_at) values(1,'a','b','c',to_timestamp('16-05-2011 15:36:38', 'dd-mm-yyyy hh24:mi:ss'))
+CREATE TABLE public.url_details
+(
+    id bigint NOT NULL,
+    long_url text COLLATE pg_catalog."default" NOT NULL,
+    short_url text COLLATE pg_catalog."default" NOT NULL,
+    hash text COLLATE pg_catalog."default" NOT NULL,
+    created_at time without time zone NOT NULL,
+    CONSTRAINT id PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.url_details
+    OWNER to i858830;

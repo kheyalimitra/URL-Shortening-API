@@ -1,0 +1,10 @@
+{
+   "dev": {
+        "user": "i858830",
+        "host": "localhost",
+        "database": "postgres",
+        "password": "pgAdmin",
+        "port": "5432",
+        "table_name": "url_details"
+   } 
+}
