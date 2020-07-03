@@ -10,7 +10,7 @@ describe("UrlShortening", function(){
     describe ("/shortenAndSave", function(){
         it("should shorten the original url and save to table", done => {
             chai.request(server)
-                .post("/api/shortenURL")
+                .post("/shortenURL")
                 .send({"url": "http://somewebsite.com"})
                 .end((err,res) => {
                     res.body.should.be.a('object');
@@ -21,7 +21,7 @@ describe("UrlShortening", function(){
         });
         it ("Should Fecth record based on hash value", (done) => {
             chai.request(server)
-                .get("/api/getByHash/2a1")
+                .get("/getByHash/134")
                 .end((err, res) => {
                     res.body.should.be.a('array');
                     res.text.should.include("id");
