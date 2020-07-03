@@ -7,6 +7,10 @@
 
 ### Shorten URL Endpoint 
  - Takes a URL as input e.g. http://somewebsite.com , stores the full and shortened URL in the DB, and returns a JSON payload.
+ - Sample Input: 
+ `{
+	    "url": "http://somewebsite.com"
+  }`
  - Sample Output
 `{
 "id" : 1234,
