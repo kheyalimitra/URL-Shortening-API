@@ -11,7 +11,7 @@ var swaggerDefinition = {
       version: '1.0.0',
       description: 'A simple service to shorten URLs',
     },
-    host: 'localhost:3000',
+    host: '0.0.0.0',
     basePath: '/',
   };
   // options for the swagger docs
@@ -31,7 +31,7 @@ const corsOptions = cors.CorsOptions = {
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
     credentials: true,
     methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
-    origin: 'http://localhost:3000',
+    origin: '*',
     preflightContinue: false
 };
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
