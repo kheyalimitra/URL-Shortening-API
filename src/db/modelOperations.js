@@ -6,17 +6,17 @@ const config = require('./dbConfig.json');
 class ModelOperations {
     constructor() {
         this.pool = new pg.Pool({
-            user: config.db_dev.user,
-            host: config.db_dev.host,
-            database: config.db_dev.database,
-            password: config.db_dev.password,
-            port: config.db_dev.port
+            user: config.db_prod.user,
+            host: config.db_prod.host,
+            database: config.db_prod.database,
+            password: config.db_prod.password,
+            port: config.db_prod.port
           });
     }
     async findByHash(hash) {
         const client = await this.pool.connect();
         try {
-            const queryString = `SELECT id, shortened_url, original_url FROM ${config.db_dev.table_name} WHERE hash=$1`;
+            const queryString = `SELECT id, shortened_url, original_url FROM ${config.db_prod.table_name} WHERE hash=$1`;
             const response = await client.query(queryString, [hash]);
             return response.rows;
         } catch(e) {
@@ -29,7 +29,7 @@ class ModelOperations {
     async getLongUrl(hash) {
         const client = await this.pool.connect();
         try {
-            const queryString = `SELECT original_url FROM ${config.db_dev.table_name} WHERE hash=$1`;
+            const queryString = `SELECT original_url FROM ${config.db_prod.table_name} WHERE hash=$1`;
             const response = await client.query(queryString, [hash]);
             return response;
         } catch(e) {
@@ -44,7 +44,7 @@ class ModelOperations {
         // we don't need to dispose of the client (it will be undefined)
         const client = await this.pool.connect();
         const shortUrl = `${config.url_domain_dev}/${payload.hash}`;
-        const queryString = `INSERT INTO ${config.db_dev.table_name} (original_url, shortened_url, hash) VALUES ($1, $2, $3)RETURNING id;`;
+        const queryString = `INSERT INTO ${config.db_prod.table_name} (original_url, shortened_url, hash) VALUES ($1, $2, $3)RETURNING id;`;
         try{
             await client.query('BEGIN');
             const response = await client.query(queryString, [payload.url, shortUrl, payload.hash]);

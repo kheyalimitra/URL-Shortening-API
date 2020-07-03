@@ -1,17 +1,20 @@
 -- Table: public.url_details
 
 -- DROP TABLE public.url_details;
+
 CREATE TABLE public.url_details
 (
-    long_url text COLLATE pg_catalog."default" NOT NULL,
-    short_url text COLLATE pg_catalog."default" NOT NULL,
+    original_url text COLLATE pg_catalog."default" NOT NULL,
+    shortened_url text COLLATE pg_catalog."default" NOT NULL,
     hash text COLLATE pg_catalog."default" NOT NULL,
-    created_at time without time zone NOT NULL,
+    created_at time without time zone NOT NULL DEFAULT (now())::timestamp without time zone,
     id bigint NOT NULL DEFAULT nextval('url_details_id_seq'::regclass),
     CONSTRAINT url_details_pkey PRIMARY KEY (id)
 )
-
+WITH (
+    OIDS = FALSE
+)
 TABLESPACE pg_default;
 
 ALTER TABLE public.url_details
-    OWNER to i858830;
+    OWNER to postgres;
