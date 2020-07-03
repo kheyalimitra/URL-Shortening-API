@@ -11,7 +11,7 @@ var swaggerDefinition = {
       version: '1.0.0',
       description: 'A simple service to shorten URLs',
     },
-    host: '0.0.0.0',
+    host: 'ec2-3-128-179-103.us-east-2.compute.amazonaws.com',
     basePath: '/',
   };
   // options for the swagger docs
