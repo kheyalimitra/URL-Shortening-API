@@ -43,7 +43,7 @@ class ModelOperations {
         // note: no need for try/catch this because if connecting throws an exception
         // we don't need to dispose of the client (it will be undefined)
         const client = await this.pool.connect();
-        const shortUrl = `${config.url_domain_dev}/${payload.hash}`;
+        const shortUrl = `${config.url_domain_prod}/${payload.hash}`;
         const queryString = `INSERT INTO ${config.db_prod.table_name} (original_url, shortened_url, hash) VALUES ($1, $2, $3)RETURNING id;`;
         try{
             await client.query('BEGIN');

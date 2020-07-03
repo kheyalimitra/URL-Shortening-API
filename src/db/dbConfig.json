@@ -1,20 +1,20 @@
 {
    "db_dev": {
-        "user": "i858830",
+        "user": "",
         "host": "localhost",
         "database": "postgres",
-        "password": "pgAdmin",
+        "password": "",
         "port": "5432",
-        "table_name": "url_details"
+        "table_name": ""
    } ,
    "db_prod": {
-    "user": "postgres",
-    "host": "url-shrt-db.cwkpmmmvshsp.us-east-2.rds.amazonaws.com",
-    "database": "postgres",
-    "password": "postgres",
-    "port": "5432",
-    "table_name": "url_details"
+        "user": "",
+        "host": "url-shrt-db.cwkpmmmvshsp.us-east-2.rds.amazonaws.com",
+        "database": "",
+        "password": "",
+        "port": "",
+        "table_name": ""
     } ,
    "url_domain_dev": "http://localhost:3000",
-   "url_domain_prod": "http://localhost:3000"
+   "url_domain_prod": "3.128.179.103"
 }
