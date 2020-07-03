@@ -6,7 +6,7 @@ const router = express.Router();
 const service = new UrlShorteningService();
 /**
  * @swagger
- * /api/shortenURL:
+ * /shortenURL:
  *   post:
  *     tags:
  *       - shortenURL
@@ -33,7 +33,7 @@ router.post('/shortenURL', (req, res) => {
 });
 /**
  * @swagger
- * /api/getByHash/{hash}:
+ * /getByHash/{hash}:
  *   get:
  *     tags:
  *       - getByHash
@@ -60,7 +60,7 @@ router.get('/getByHash/:hash', (req, res) => {
 });
 // /**
 //  * @swagger
-//  * /api/{hash}:
+//  * /{hash}:
 //  *   get:
 //  *     tags:
 //  *       - redirect

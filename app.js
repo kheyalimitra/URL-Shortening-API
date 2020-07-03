@@ -38,9 +38,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 const appRouter = require('./src/api/routes');
-const port = process.env.PORT || 3000;
-const host = '127.0.0.1';
-app.use('/api', appRouter);
+const port = process.env.PORT || 80;
+const host = '0.0.0.0';
+app.use('/', appRouter);
 app.listen(port, host);
 console.log('Node server running ...');
 
