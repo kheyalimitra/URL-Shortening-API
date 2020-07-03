@@ -10,20 +10,21 @@
  - Sample Output
 `{
 "id" : 1234,
-"shortened_url" : "http://shorten.io/sY4",
+"shortened_url" : "http://3.128.179.103/sY4",
 "original_url" : "http://somewebsite.com" }`
 
 ### Redirect Endpoint
-The shortened URL will redirect to the real URL, e.g. http://shorten.io/sY4 redirects to http://somewebsite.com
+The shortened URL will redirect to the real URL, e.g. http://3.128.179.103/sY4 redirects to http://somewebsite.com
 
 ### Retrieve URL Info Endpoint
-Querying the hash of the URL will return it’s details. e.g. http://shorten.io/urls/sY4 returns:
+Querying the hash of the URL will return it’s details. e.g. http:3.128.179.103/sY4 returns:
 `{
 "id" : 1234,
-"shortened_url" : "http://shorten.io/sY4",
+"shortened_url" : "http:3.128.179.103/sY4",
 "original_url" : "http://somewebsite.com" }`
 
-### Try out in swagger UI : `http://ec2-3-128-179-103.us-east-2.compute.amazonaws.com/api-docs/`
+### Try out in swagger UI : 
+ - http://ec2-3-128-179-103.us-east-2.compute.amazonaws.com/api-docs/
 
 ## Implementation Details:
  - The service is implemented in node.js
