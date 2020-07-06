@@ -34,7 +34,7 @@ Querying the hash of the URL will return it’s details. e.g. http:3.128.179.103
  - The service is implemented in node.js
  - The service is backed by a Postgres database
  - The service is hosted in AWS and accessible online
- ### Project Structure
+ ### Project Folder Structure
     ├── src/
     │   ├── db/
     |   |.   |-- scripts/createTable
